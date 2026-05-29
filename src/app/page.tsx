@@ -7,7 +7,7 @@ import * as Tabs from "@radix-ui/react-tabs";
 import SegmentHeader from "../components/segmentHeader";
 import TabList from "../components/tabList";
 import QuestItem, {QuestItemProps} from "../components/questItem";
-import QuestBookSlot, {QuestBookSlotProps} from "../components/questBookSlot";
+import QuestBookSlot from "../components/questBookSlot";
 
 //DATA INJECTION
 import * as QuestData from "../data/questData";
@@ -43,14 +43,6 @@ export default function Home() {
     epicQuest: EmptyQuest,
     potionQuest: EmptyQuest,
   })
-  
-  const [activeQuestList, setActiveQuestList] = useState<QuestItemProps[]>([EmptyQuest, EmptyQuest]);
-  
-  const oldEmptyQuestbook = () => {
-    setActiveQuestList((prevList) =>
-        prevList.map((isDimmed, i) => (i === 0 ? isDimmed=EmptyQuest : isDimmed))
-    )
-  }
 
   const emptyQuestbook = (slot: string) => {
     setQuestBook((prevQuestbook) => ({
@@ -65,7 +57,7 @@ export default function Home() {
         ...prevQuestbook,
         [slot]: quest,
       }))
-    } else if (slot === "standardQuest1" && questBook.standardQuest1.name === "Empty"){
+    } else if (slot === "standardQuest1" && questBook.standardQuest2.name === "Empty"){
       setQuestBook((prevQuestbook) => ({
         ...prevQuestbook,
         standardQuest2: quest,
@@ -104,12 +96,28 @@ export default function Home() {
               <Tabs.Root defaultValue="scout" orientation="vertical" className="bg-gray-900 h-full">
                 <TabList {...MenuTabsData.Quests} />
 
-                <Tabs.Content value="scout" className="flex flex-1 h-full flex-col items-center justify-start p-3 space-y-2 bg-gray-800">
+                <Tabs.Content value="scout" className="flex flex-1 h-full flex-col items-center justify-start p-3 space-y-2 bg-gray-800 overflow-auto">
                   {QuestData.ScoutQuests.map((quest, index) => (<QuestItem key={index} {...quest} onClickButton={() => addToQuestbook("scoutQuest", quest)}/>))}
                 </Tabs.Content>
 
-                <Tabs.Content value="beginner" className="flex flex-1 h-full flex-col items-center justify-start p-3 space-y-2 bg-gray-800">
+                <Tabs.Content value="beginner" className="flex flex-1 h-full flex-col items-center justify-start p-3 space-y-2 bg-gray-800 overflow-auto">
                   {QuestData.BeginnerQuests.map((quest, index) => (<QuestItem key={index} {...quest} onClickButton={() => addToQuestbook("beginnerQuest", quest)}/>))}
+                </Tabs.Content>
+
+                <Tabs.Content value="standard" className="flex flex-1 h-full flex-col items-center justify-start p-3 space-y-2 bg-gray-800 overflow-auto">
+                  {QuestData.StandardQuests.map((quest, index) => (<QuestItem key={index} {...quest} onClickButton={() => addToQuestbook("standardQuest1", quest)}/>))}
+                </Tabs.Content>
+
+                <Tabs.Content value="mighty" className="flex flex-1 h-full flex-col items-center justify-start p-3 space-y-2 bg-gray-800 overflow-auto">
+                  {QuestData.MightyQuests.map((quest, index) => (<QuestItem key={index} {...quest} onClickButton={() => addToQuestbook("mightyQuest1", quest)}/>))}
+                </Tabs.Content>
+
+                <Tabs.Content value="epic" className="flex flex-1 h-full flex-col items-center justify-start p-3 space-y-2 bg-gray-800 overflow-auto">
+                  {QuestData.EpicQuests.map((quest, index) => (<QuestItem key={index} {...quest} onClickButton={() => addToQuestbook("epicQuest", quest)}/>))}
+                </Tabs.Content>
+
+                <Tabs.Content value="potion" className="flex flex-1 h-full flex-col items-center justify-start p-3 space-y-2 bg-gray-800 overflow-auto">
+                  {QuestData.PotionQuests.map((quest, index) => (<QuestItem key={index} {...quest} onClickButton={() => addToQuestbook("potionQuest", quest)}/>))}
                 </Tabs.Content>
 
               </Tabs.Root>
@@ -189,10 +197,9 @@ export default function Home() {
         </div>
         <div className="flex flex-1 flex-col items-center justify-between bg-white space-y-4 dark:bg-black">
           <div className="flex flex-1 w-full flex-row items-center justify-between bg-white space-x-4 dark:bg-black">
-            <div className="flex flex-1 h-full flex-col items-center justify-between pb-4 bg-white dark:bg-gray-800 rounded-xl ">
+            <div className="flex flex-1 h-full flex-col items-center justify-start pb-4 space-y-1 bg-white dark:bg-gray-800 rounded-xl ">
 
               <SegmentHeader {...{name: "Questbook"}} />
-
 
               <QuestBookSlot emptyString="Scout Quest Slot" quest={questBook.scoutQuest} onClickSlot={() => emptyQuestbook("scoutQuest")}/>
               <QuestBookSlot emptyString="Beginner Quest Slot" quest={questBook.beginnerQuest} onClickSlot={() => emptyQuestbook("beginnerQuest")} />
