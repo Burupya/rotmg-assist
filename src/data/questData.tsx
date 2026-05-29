@@ -118,7 +118,7 @@ rewards: [{amount: 1, src:rewards.beginnerChest}],
 
 const BeginnerHive: QuestItemProps = {
 name: "The Queen Bee",
-requirements: [{amount: 4, src:marks.QueenBeeMark}],
+requirements: [{amount: 4, src:marks.QueenBee}],
 rewards: [{amount: 1, src:rewards.beginnerChest}],
 }
 
@@ -129,7 +129,7 @@ requirements: [
     {amount: 1, src:marks.MamaMegamoth},
     {amount: 1, src:marks.Arachna},
     {amount: 1, src:marks.Mixcoatl},
-    {amount: 1, src:marks.QueenBeeMark},
+    {amount: 1, src:marks.QueenBee},
 ],
 rewards: [
     {amount: 1, src:rewards.beginnerChest},
