@@ -12,7 +12,7 @@ export type QuestItemProps = {
 
 export default function QuestItem(props: QuestItemProps){
     return (
-        <div className="flex flex-1 w-full h-full max-h-20 flex-row items-center bg-gray-700 my-2 rounded-xl ring-4 ring-gray-600">
+        <div className="flex flex-1 w-full h-full max-h-20 min-h-20 flex-row items-center bg-gray-700 my-2 rounded-xl ring-4 ring-gray-600">
             <div className="flex flex-1 max-w-3/10 mx-2 flex-row items-center justify-center px-6 rounded-xl">
             <p className="font-comfortaa font-semibold text-xl">{props.name}</p>
             </div>
