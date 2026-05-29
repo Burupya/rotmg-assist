@@ -7,6 +7,7 @@ import * as Tabs from "@radix-ui/react-tabs";
 import SegmentHeader from "../components/segmentHeader";
 import TabList from "../components/tabList";
 import QuestItem, {QuestItemProps} from "../components/questItem";
+import QuestBookSlot, {QuestBookSlotProps} from "../components/questBookSlot";
 
 //DATA INJECTION
 import * as QuestData from "../data/questData";
@@ -14,42 +15,67 @@ import { CompendiumTabList } from "../data/menuTabsData";
 import { MenuTabsData } from "../data/menuTabsData";
 
 export default function Home() {
-
-  const BeginnerHive1: QuestItemProps = {
-  name: "Quest",
-  requirements: [{amount: 5, src:"/marks/QueenBeeMark.png"}],
-  rewards: [{amount: 1, src:"/misc/beginnerChest.png"}],
-  }
-
-  const BeginnerHive2: QuestItemProps = {
-  name: "The Queen Bee",
-  requirements: [{amount: 8, src:"/marks/QueenBeeMark.png"}],
-  rewards: [{amount: 1, src:"/misc/beginnerChest.png"}],
-  }
-
+  
   const EmptyQuest: QuestItemProps = {
-  name: "Empty",
-  requirements: [{amount: 0, src:""}],
-  rewards: [{amount: 0, src:""}],
+    name: "Empty",
+    requirements: [{amount: 0, src:""}],
+    rewards: [{amount: 0, src:""}],
   }
 
-  /*
-  interface ActiveQuestList {
-    activeQuests: [QuestItemProps, QuestItemProps]
-  }*/
+  type Questbook = {
+    scoutQuest: QuestItemProps,
+    beginnerQuest: QuestItemProps,
+    standardQuest1: QuestItemProps,
+    standardQuest2: QuestItemProps,
+    mightyQuest1: QuestItemProps,
+    mightyQuest2: QuestItemProps,
+    epicQuest: QuestItemProps,
+    potionQuest: QuestItemProps,
+  }
 
-  const [activeQuestList, setActiveQuestList] = useState<QuestItemProps[]>([BeginnerHive1, BeginnerHive2]);
-
-  const handleQuestClick = () => {
+  const [questBook, setQuestBook] = useState<Questbook>({
+    scoutQuest: EmptyQuest,
+    beginnerQuest: EmptyQuest,
+    standardQuest1: EmptyQuest,
+    standardQuest2: EmptyQuest,
+    mightyQuest1: EmptyQuest,
+    mightyQuest2: EmptyQuest,
+    epicQuest: EmptyQuest,
+    potionQuest: EmptyQuest,
+  })
+  
+  const [activeQuestList, setActiveQuestList] = useState<QuestItemProps[]>([EmptyQuest, EmptyQuest]);
+  
+  const oldEmptyQuestbook = () => {
     setActiveQuestList((prevList) =>
         prevList.map((isDimmed, i) => (i === 0 ? isDimmed=EmptyQuest : isDimmed))
     )
   }
 
-  const handleCompendiumClick = (props: QuestItemProps) => {
-    setActiveQuestList((prevList) =>
-        prevList.map((isDimmed, i) => (i === 0 ? isDimmed=props : isDimmed))
-    )
+  const emptyQuestbook = (slot: string) => {
+    setQuestBook((prevQuestbook) => ({
+      ...prevQuestbook,
+      [slot]: EmptyQuest,
+    }))
+  }
+
+  const addToQuestbook = <Questkey extends keyof Questbook>(slot: Questkey, quest: QuestItemProps) => {
+    if(questBook[slot].name === "Empty"){
+      setQuestBook((prevQuestbook) => ({
+        ...prevQuestbook,
+        [slot]: quest,
+      }))
+    } else if (slot === "standardQuest1" && questBook.standardQuest1.name === "Empty"){
+      setQuestBook((prevQuestbook) => ({
+        ...prevQuestbook,
+        standardQuest2: quest,
+      }))
+    } else if (slot === "mightyQuest1" && questBook.mightyQuest2.name === "Empty"){
+      setQuestBook((prevQuestbook) => ({
+        ...prevQuestbook,
+        mightyQuest2: quest,
+      }))
+    }
   }
 
   return (
@@ -75,15 +101,15 @@ export default function Home() {
 
             {/*QUEST TABS*/}
             <Tabs.Content value="quest" className="h-full bg-gray-800">
-              <Tabs.Root defaultValue="scout" orientation="vertical" className="bg-gray-900">
+              <Tabs.Root defaultValue="scout" orientation="vertical" className="bg-gray-900 h-full">
                 <TabList {...MenuTabsData.Quests} />
 
-                <Tabs.Content value="scout" className="flex flex-1 h-full flex-col items-center justify-between p-3 space-y-2 bg-gray-800">
-                  {QuestData.ScoutQuests.map((quest, index) => (<QuestItem key={index} {...quest}/>))}
+                <Tabs.Content value="scout" className="flex flex-1 h-full flex-col items-center justify-start p-3 space-y-2 bg-gray-800">
+                  {QuestData.ScoutQuests.map((quest, index) => (<QuestItem key={index} {...quest} onClickButton={() => addToQuestbook("scoutQuest", quest)}/>))}
                 </Tabs.Content>
 
-                <Tabs.Content value="beginner" className="flex flex-1 h-full flex-col items-center justify-between p-3 space-y-2 bg-gray-800">
-                  {QuestData.BeginnerQuests.map((quest, index) => (<QuestItem key={index} {...quest} onNotifyParent={handleCompendiumClick}/>))}
+                <Tabs.Content value="beginner" className="flex flex-1 h-full flex-col items-center justify-start p-3 space-y-2 bg-gray-800">
+                  {QuestData.BeginnerQuests.map((quest, index) => (<QuestItem key={index} {...quest} onClickButton={() => addToQuestbook("beginnerQuest", quest)}/>))}
                 </Tabs.Content>
 
               </Tabs.Root>
@@ -163,16 +189,29 @@ export default function Home() {
         </div>
         <div className="flex flex-1 flex-col items-center justify-between bg-white space-y-4 dark:bg-black">
           <div className="flex flex-1 w-full flex-row items-center justify-between bg-white space-x-4 dark:bg-black">
-            <div className="flex flex-1 h-full flex-col items-center justify-between bg-white dark:bg-gray-800 rounded-xl">
+            <div className="flex flex-1 h-full flex-col items-center justify-between pb-4 bg-white dark:bg-gray-800 rounded-xl ">
 
               <SegmentHeader {...{name: "Questbook"}} />
+
+
+              <QuestBookSlot emptyString="Scout Quest Slot" quest={questBook.scoutQuest} onClickSlot={() => emptyQuestbook("scoutQuest")}/>
+              <QuestBookSlot emptyString="Beginner Quest Slot" quest={questBook.beginnerQuest} onClickSlot={() => emptyQuestbook("beginnerQuest")} />
+              <QuestBookSlot emptyString="Standard Quest Slot" quest={questBook.standardQuest1} onClickSlot={() => emptyQuestbook("standardQuest1")} />
+              <QuestBookSlot emptyString="Standard Quest Slot" quest={questBook.standardQuest2} onClickSlot={() => emptyQuestbook("standardQuest2")} />
+              <QuestBookSlot emptyString="Mighty Quest Slot" quest={questBook.mightyQuest1} onClickSlot={() => emptyQuestbook("mightyQuest1")} />
+              <QuestBookSlot emptyString="Mighty Quest Slot" quest={questBook.mightyQuest2} onClickSlot={() => emptyQuestbook("mightyQuest2")} />
+              <QuestBookSlot emptyString="Epic Quest Slot" quest={questBook.epicQuest} onClickSlot={() => emptyQuestbook("epicQuest")} />
+              <QuestBookSlot emptyString="Potion Quest Slot" quest={questBook.potionQuest} onClickSlot={() => emptyQuestbook("potionQuest")} />
+
+              {/*
               <div className="flex flex-1 min-w-97/100 max-h-1/8 flex-row items-center justify-center p-2 bg-gray-900 m-4 rounded-xl ring-4 ring-black">
                 {activeQuestList[0].name !== "Empty" ? (
-                  <QuestItem {...activeQuestList[0]} onNotifyParent={handleQuestClick}/>
+                  <QuestItem {...activeQuestList[0]} onClickButton={emptyQuestbook}/>
                 ) : (
                   <p className="font-comfortaa font-semibold text-xl text-gray-500">Beginner Quest Slot</p>
                 )}
               </div>
+              */}
 
             </div>
             <div className="flex flex-1 h-full max-w-1/4 flex-col items-center justify-between bg-white dark:bg-gray-800 rounded-xl">
@@ -181,7 +220,7 @@ export default function Home() {
 
             </div>
           </div>
-          <div className="flex flex-1 w-full max-h-1/3 flex-col items-center justify-between bg-white dark:bg-gray-800 rounded-xl">
+          <div className="flex flex-1 w-full max-h-2/7 flex-col items-center justify-between bg-white dark:bg-gray-800 rounded-xl">
             
             <SegmentHeader {...{name: "Focus"}} />
 
