@@ -15,6 +15,40 @@ const marks: Record<string, string> = {
     Arachna: "/marks/ArachnaMark.png",
     Mixcoatl: "/marks/MixcoatlMark.png",
     QueenBee: "/marks/QueenBeeMark.png",
+
+    Titan: "/marks/TitanMark.png",
+    Skuld: "/marks/SkuldMark.png",
+    Ruthven: "/marks/RuthvenMark.png",
+    Terrible: "/marks/TerribleMark.png",
+
+    Effigy: "/marks/EffigyMark.png",
+    Heart: "/marks/HeartMark.png",
+    Megamoth: "/marks/MegamothMark.png",
+    Bilgewater: "/marks/BilgewaterMark.png",
+    SonArachna: "/marks/SonArachnaMark.png",
+    Bradley: "/marks/BradleyMark.png",
+    Thessal: "/marks/ThessalMark.png",
+    Parasite: "/marks/ParasiteMark.png",
+    Davy: "/marks/DavyMark.png",
+    Wyvern: "/marks/WyvernMark.png",
+    Daichi: "/marks/DaichiMark.png",
+    Esben: "/marks/EsbenMark.png",
+    Geb: "/marks/GebMark.png",
+    Tesseract: "/marks/TesseractMark.png",
+    Oryx: "/marks/OryxMark.png",
+    Janus: "/marks/JanusMark.png",
+
+    KillerBee: "/marks/KillerBeeMark.png",
+    King: "/marks/KingMark.png",
+    Colossus: "/marks/ColossusMark.png",
+    Cultist: "/marks/CultistMark.png",
+    VoidEntity: "/marks/VoidEntityMark.png",
+    Crystal: "/marks/CrystalMark.png",
+    Kogbold: "/marks/KogboldMark.png",
+    Moonlight: "/marks/MoonlightMark.png",
+    AdvKogbold: "/marks/AdvKogboldMark.png",
+    PlaguedKillerBee: "/marks/PlaguedKillerBeeMark.png",
+    Murcian: "/marks/MurcianMark.png",
 }
 
 const pots: Record<string, string> = {
@@ -38,8 +72,28 @@ const pots: Record<string, string> = {
 }
 
 const rewards: Record<string, string> = {
-    beginnerChest: "/misc/beginnerChest.png",
-    treasureMap: "/misc/treasureMap.png",
+    beginnerChest: "/misc/BeginnerChest.png",
+    standardChest: "/misc/StandardChest.png",
+    mightyChest: "/misc/MightyChest.png",
+
+    honeyChest: "/misc/HoneyEpicChest.png",
+    royalChest: "/misc/RoyalEpicChest.png",
+    marbleChest: "/misc/MarbleEpicChest.png",
+    cultistChest: "/misc/CultistEpicChest.png",
+    voidChest: "/misc/VoidEpicChest.png",
+    crystalChest: "/misc/CrystalEpicChest.png",
+    steamChest: "/misc/SteamEpicChest.png",
+    moonlightChest: "/misc/MoonlightEpicChest.png",
+    spectralChest: "/misc/SpectralEpicChest.png",
+
+    cubicJelly: "/misc/CubicJelly.png",
+    speedSprout: "/misc/SpeedSprout.png",
+
+    treasureMap: "/misc/TreasureMap.png",
+    luckyClover: "/misc/LuckyClover.png",
+
+    lootDropPotion: "/misc/LootDropPotion.png",
+    lootTierPotion: "/misc/LootTierPotion.png",
 }
 
 const ScoutPit: QuestItemProps = {
@@ -138,3 +192,13 @@ rewards: [
 }
 
 export const BeginnerQuests: QuestItemProps[] = [BeginnerPirateCave, BeginnerForestMaze, BeginnerSpiderDen, BeginnerForbiddenJungle, BeginnerHive, BeginnerTable]
+
+const StandardSnakeQueen: QuestItemProps = {
+    name: "The Snake Queen",
+    requirements: [
+        {amount: 8, src:marks.Stheno},
+    ],
+    rewards: [
+        {amount: 1, src:rewards.standardChest}
+    ]
+}

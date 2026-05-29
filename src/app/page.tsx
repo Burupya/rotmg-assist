@@ -7,7 +7,7 @@ import * as Tabs from "@radix-ui/react-tabs";
 import SegmentHeader from "../components/segmentHeader";
 import TabList from "../components/tabList";
 import QuestItem, {QuestItemProps} from "../components/questItem";
-import QuestBookSlot, {QuestBookSlotProps} from "../components/questBookSlot";
+import QuestBookSlot from "../components/questBookSlot";
 
 //DATA INJECTION
 import * as QuestData from "../data/questData";
@@ -43,14 +43,6 @@ export default function Home() {
     epicQuest: EmptyQuest,
     potionQuest: EmptyQuest,
   })
-  
-  const [activeQuestList, setActiveQuestList] = useState<QuestItemProps[]>([EmptyQuest, EmptyQuest]);
-  
-  const oldEmptyQuestbook = () => {
-    setActiveQuestList((prevList) =>
-        prevList.map((isDimmed, i) => (i === 0 ? isDimmed=EmptyQuest : isDimmed))
-    )
-  }
 
   const emptyQuestbook = (slot: string) => {
     setQuestBook((prevQuestbook) => ({
