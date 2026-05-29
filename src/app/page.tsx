@@ -71,16 +71,16 @@ export default function Home() {
   }
 
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full flex-row items-center justify-between p-8 space-x-4 bg-white dark:bg-black sm:items-stretch">
-        <div className="flex flex-1 max-w-1/3 flex-col items-center bg-white dark:bg-gray-800 rounded-xl">
+    <div className="flex flex-col shrink min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
+      <main className="flex grow w-full h-full flex-row items-center justify-between p-8 space-x-4 bg-white dark:bg-black sm:items-stretch">
+        <div className="flex shrink w-1/2 h-full flex-col items-center bg-white dark:bg-gray-800 rounded-xl">
 
           <SegmentHeader {...{name: "Compendium"}} />
 
           {/*COMPENDIUM TABS*/}
           <Tabs.Root defaultValue="quest" orientation="vertical" 
-            className="flex flex-1 flex-col w-full h-full bg-gray-900 border-black">
-		        <Tabs.List aria-label="compendium tabs" className="flex w-full border-b-4 border-black space-x-1">
+            className="flex shrink flex-col w-full h-full bg-gray-900 border-black rounded-b-xl">
+		        <Tabs.List aria-label="compendium tabs" className="flex w-full border-b-4 border-black space-x-1 rounded-b-xl">
               {CompendiumTabList.map((tab, index) => (
                 <Tabs.Trigger 
                   key={index} 
@@ -92,31 +92,31 @@ export default function Home() {
 		        </Tabs.List>
 
             {/*QUEST TABS*/}
-            <Tabs.Content value="quest" className="h-full bg-gray-800">
-              <Tabs.Root defaultValue="scout" orientation="vertical" className="bg-gray-900 h-full">
+            <Tabs.Content value="quest" className="flex flex-none flex-col w-full h-full bg-gray-800 rounded-b-xl">
+              <Tabs.Root defaultValue="scout" orientation="vertical" className="bg-gray-900 h-full rounded-b-xl">
                 <TabList {...MenuTabsData.Quests} />
 
-                <Tabs.Content value="scout" className="flex flex-1 h-full flex-col items-center justify-start p-3 space-y-2 bg-gray-800 overflow-auto">
+                <Tabs.Content value="scout" className="scrollbar-thumb-gray-500 scrollbar-track-gray-800 rounded-b-xl flex flex-none h-[calc(100vh-224px)] flex-col items-center justify-start p-3 space-y-2 bg-gray-800 overflow-auto">
                   {QuestData.ScoutQuests.map((quest, index) => (<QuestItem key={index} {...quest} onClickButton={() => addToQuestbook("scoutQuest", quest)}/>))}
                 </Tabs.Content>
 
-                <Tabs.Content value="beginner" className="flex flex-1 h-full flex-col items-center justify-start p-3 space-y-2 bg-gray-800 overflow-auto">
+                <Tabs.Content value="beginner" className="scrollbar-thumb-gray-500 scrollbar-track-gray-800 rounded-b-xl flex flex-none h-[calc(100vh-224px)] flex-col items-center justify-start p-3 space-y-2 bg-gray-800 overflow-auto">
                   {QuestData.BeginnerQuests.map((quest, index) => (<QuestItem key={index} {...quest} onClickButton={() => addToQuestbook("beginnerQuest", quest)}/>))}
                 </Tabs.Content>
 
-                <Tabs.Content value="standard" className="flex flex-1 h-full flex-col items-center justify-start p-3 space-y-2 bg-gray-800 overflow-auto">
+                <Tabs.Content value="standard" className="scrollbar-thumb-gray-500 scrollbar-track-gray-800 rounded-b-xl flex flex-none h-[calc(100vh-224px)] flex-col items-center justify-start p-3 space-y-2 bg-gray-800 overflow-y-auto">
                   {QuestData.StandardQuests.map((quest, index) => (<QuestItem key={index} {...quest} onClickButton={() => addToQuestbook("standardQuest1", quest)}/>))}
                 </Tabs.Content>
 
-                <Tabs.Content value="mighty" className="flex flex-1 h-full flex-col items-center justify-start p-3 space-y-2 bg-gray-800 overflow-auto">
+                <Tabs.Content value="mighty" className="scrollbar-thumb-gray-500 scrollbar-track-gray-800 rounded-b-xl flex flex-none h-[calc(100vh-224px)] flex-col items-center justify-start p-3 space-y-2 bg-gray-800 overflow-auto">
                   {QuestData.MightyQuests.map((quest, index) => (<QuestItem key={index} {...quest} onClickButton={() => addToQuestbook("mightyQuest1", quest)}/>))}
                 </Tabs.Content>
 
-                <Tabs.Content value="epic" className="flex flex-1 h-full flex-col items-center justify-start p-3 space-y-2 bg-gray-800 overflow-auto">
+                <Tabs.Content value="epic" className="scrollbar-thumb-gray-500 scrollbar-track-gray-800 rounded-b-xl flex flex-none h-[calc(100vh-224px)] flex-col items-center justify-start p-3 space-y-2 bg-gray-800 overflow-auto">
                   {QuestData.EpicQuests.map((quest, index) => (<QuestItem key={index} {...quest} onClickButton={() => addToQuestbook("epicQuest", quest)}/>))}
                 </Tabs.Content>
 
-                <Tabs.Content value="potion" className="flex flex-1 h-full flex-col items-center justify-start p-3 space-y-2 bg-gray-800 overflow-auto">
+                <Tabs.Content value="potion" className="scrollbar-thumb-gray-500 scrollbar-track-gray-800 rounded-b-xl flex flex-none h-[calc(100vh-224px)] flex-col items-center justify-start p-3 space-y-2 bg-gray-800 overflow-auto">
                   {QuestData.PotionQuests.map((quest, index) => (<QuestItem key={index} {...quest} onClickButton={() => addToQuestbook("potionQuest", quest)}/>))}
                 </Tabs.Content>
 
@@ -221,17 +221,21 @@ export default function Home() {
               */}
 
             </div>
+            {/* --WISHLIST TAB, NOT IN USE YET
             <div className="flex flex-1 h-full max-w-1/4 flex-col items-center justify-between bg-white dark:bg-gray-800 rounded-xl">
               
               <SegmentHeader {...{name: "Wishlist"}} />
 
             </div>
+            */}
           </div>
+          {/* --FOCUS TAB, NOT IN USE YET
           <div className="flex flex-1 w-full max-h-2/7 flex-col items-center justify-between bg-white dark:bg-gray-800 rounded-xl">
             
             <SegmentHeader {...{name: "Focus"}} />
 
           </div>
+          */}
         </div>
       </main>
     </div>
